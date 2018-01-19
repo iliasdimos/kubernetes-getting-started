@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  worker
+  labels:
+    name:  worker
+spec:
+  replicas: 4
+  minReadySeconds: 30
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  revisionHistoryLimit: 4
+  template:
+    metadata:
+      labels:
+        app:  worker
+    spec:
+      containers:
+      - image:  dosko64/worker
+        name:  worker
+        command: ["./bin/worker"]
+        args: ["-loglever=DEBUG"]
+        resources:
+          requests:
+            cpu: "0.5"
+            memory: "1Gi"
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 9000
+          initialDelaySeconds: 120
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 9000
+          initialDelaySeconds: 60
+          timeoutSeconds: 10
+        env:
+        - name: EXTRA_SERVICE
+          value: "extra.production.svc"        
+        ports:
+        - containerPort:  9000
+          name:  play
+        - containerPort:  9010
+          name:  jmx
+        imagePullPolicy: Always
+      restartPolicy: Always

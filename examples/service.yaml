@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  worker
+spec:
+  selector:
+    app:  worker
+  type: ClusterIP | NodePort | LoadBalancer
+  ports:
+  - name: play
+    port: 9000
+    targetPort: 9000
+  - name: jmx
+    port: 9010
+    targetPort: 9010
+

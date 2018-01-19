@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  worker
+  labels:
+    name:  worker
+spec:
+  replicas: 4
+  minReadySeconds: 30
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  revisionHistoryLimit: 4
+  template:
+    metadata:
+      labels:
+        app:  worker
+    spec:
+      containers:
+

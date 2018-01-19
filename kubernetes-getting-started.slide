@@ -1,0 +1,223 @@
+Kubernetes Getting Started
+Feb 2018
+
+Ilias Dimos
+DevOps Engineer, Pollfish
+iliasdimos@gmail.com
+@dosko64
+
+
+
+
+
+* What is Kubernetes?
+- A highly available cluster of computers, connected to work as a single unit
+- Automates the distribution and scheduling of containers in that cluster
+- Backed by a big community and Google
+- A lot of enteprises put effort on the project
+
+
+.image images/kubernetes.png
+
+
+
+
+* Why Kubernetes
+- Run new code in production without setting up servers (if you manage to setup a cluster)
+- Fail over capabilities
+- Easy see what you are running in the cluster
+- Better use of your resources
+
+
+
+
+* Setup 
+Local 
+- Minikube
+
+Cloud Providers
+- Google Kubernetes Engine
+- Microsoft ACS Engine and AKS Engine
+- Amazon EKS
+
+Tools to setup your cluster
+- kubeadm 
+- kops 
+- kubicorn
+
+Cli tool 
+- kubectl
+
+
+
+
+* Enterprise Solutions 
+
+- Juju by Canonical
+- Tectonic  by CoreOS
+
+- More at 
+.link https://kubernetes.io/docs/setup/pick-right-solution/
+
+There are a lot of resources out there on how to setup you cluster
+
+
+
+
+* Architecture
+Node Types: 
+
+- *Master* / Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
+- *Nodes* - a worker machine
+
+And state is stored in
+
+- *etcd* - Stores the state of the cluster and running components
+
+    kubectl get nodes
+
+
+
+* Architecture (2) / Configuration:
+
+- *kubelet* - The agent that runs on each node
+- *kube-apiserver* - REST operations with the cluster
+- *kube-controller-manager* - Watches the shared state of the cluster and makes changes towards the desired state
+- *kube-scheduler* - Watches over the cluster and acts accordingly. All are exposed through the API as necessary.
+
+
+
+
+* Components: 
+
+- *Pod* - The smallest deployable object
+- *ReplicationController* - enables you to easily create multiple pods, then make sure that that number of pods always exists
+- *ReplicaSet* - Replication status of the RC but with more options for the selector. 
+- *Deployment* - Replacement of RC, replication through RS, Rollout/rollback abilities.
+
+
+    kubectl get pods 
+    kubectl get rc 
+    kubectl get rs 
+    kubectl get deployment 
+
+    kubectl get all
+
+- *Namespace* - Virtual clusters in the same physical cluster
+
+    kubectl get namespace
+    kubectl get all --all-namespaces
+
+
+
+
+
+* Okay, how i connect to this ?
+
+*Services*
+
+Service is the entity that give us (loadbalanced) access to the deployments/pods with the following types:
+
+- ClusterIP
+- NodePort
+- LoadBalancer
+
+    kubectl get svc 
+
+
+
+
+* Okay, how i connect to this ? (2)
+
+*Ingress*
+
+a collection of rules that allow inbound connections to reach the cluster services.
+(Imagine an Nginx in your cluster, with SSL termination and name-based routing)
+
+.code examples/ingress.yaml
+
+    kubectl get ingress
+
+
+
+
+* Tools  
+- kubectl 
+
+** Demo
+
+Basic kubectl commands
+
+    kubectl run nginx --image=nginx --port=80
+    kubectl expose deployment nginx --target-port=80 --type=NodePort
+    kubectl get pods | deployment | svc | all 
+    kubectl describe <resource>
+    kubectl logs <pod_name>
+
+
+
+
+* Working stack
+
+- Deployment -> ReplicaSet -> Pods
+
+- Use Yaml files for definitions 
+
+
+* Deployment Simple Example 
+.code -edit examples/deployment_simple.yaml
+
+
+* Deployment Full Example
+.code -edit examples/deployment1.yaml
+
+
+* Deployment Full Example (part 2)
+.code -edit examples/deployment2.yaml
+
+
+* Deployment Full Example (part 3)
+.code -edit examples/deployment3.yaml
+
+
+
+* Service Example
+.code -edit examples/service.yaml
+
+
+
+
+
+* Demo (2)
+
+Deployment and service
+
+    kubectl create -f app-deployment.yaml
+    
+    kubectl create -f app-service.yaml
+
+    kubectl update -f app-deployment.yaml
+
+
+
+
+
+* TL/DR notes
+
+- Okay, I 've got my cluster what i need 
+Service and Deployment definition for all workloads
+
+- KubeDNS provide access to services in the form of :
+<service-name>.<namespace>.svc
+
+- In case you need it, Environmental Variables for everytinhg up to creation time in pods are available
+
+- Always use limits for pods
+
+
+
+
+
+* Presentation Available at 
+
+.link https://github.com/dosko64/kubernetes-getting-started

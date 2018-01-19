@@ -1,0 +1,10 @@
+        env:
+        - name: EXTRA_SERVICE
+          value: "extra.production.svc"        
+        ports:
+        - containerPort:  9000
+          name:  play
+        - containerPort:  9010
+          name:  jmx
+        imagePullPolicy: Always
+      restartPolicy: Always
