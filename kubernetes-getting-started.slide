@@ -161,6 +161,8 @@ Basic kubectl commands
 
 - Deployment -> ReplicaSet -> Pods
 
+- Service
+
 - Use Yaml files for definitions 
 
 
@@ -196,12 +198,15 @@ Deployment and service
     
     kubectl create -f app-service.yaml
 
-    kubectl update -f app-deployment.yaml
+    kubectl replace -f app-deployment.yaml
 
     kubectl set image deployment/nginx nginx=nginx:1.13.8
 
     kubectl scale --replicas=3 -f app-deployment.yaml
 
+    kubectl rollout status deployment app-deployment
+    kubectl rollout history deployment app-deployment
+    kubectl rollout undo app-deployment -revision=30
 
 
 
