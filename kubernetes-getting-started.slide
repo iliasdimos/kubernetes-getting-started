@@ -108,6 +108,10 @@ And state is stored in
     kubectl get namespace
     kubectl get all --all-namespaces
 
+    kubectl config view
+    kubectl config set-context prod --cluster='kluster' --namespace='production' --user='kubelet'
+    kubectl config use-context prod
+
 
 
 
