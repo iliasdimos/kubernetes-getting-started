@@ -1,5 +1,5 @@
 Kubernetes Getting Started
-Feb 2018
+Apr 2018
 
 Ilias Dimos
 DevOps Engineer, Pollfish
@@ -103,10 +103,17 @@ And state is stored in
 
     kubectl get all
 
-- *Namespace* - Virtual clusters in the same physical cluster
+* Namespace 
+
+- Virtual clusters in the same physical cluster
 
     kubectl get namespace
     kubectl get all --all-namespaces
+
+- Kubeconfig 
+    Env Variables
+    KUBECONFIG 
+    Default ~/.kube/config
 
     kubectl config view
     kubectl config set-context prod --cluster='kluster' --namespace='production' --user='kubelet'
