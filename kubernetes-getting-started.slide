@@ -127,7 +127,9 @@ And state is stored in
 
 *Services*
 
-Service is the entity that give us (loadbalanced) access to the deployments/pods with the following types:
+The entity that give us (loadbalanced) access to selected deployments/pods determined by labels 
+
+Service are of the following types:
 
 - ClusterIP
 - NodePort
@@ -149,7 +151,9 @@ a collection of rules that allow inbound connections to reach the cluster servic
 
     kubectl get ingress
 
+* Recap Components
 
+.image images/Kube_basic_example.jpg
 
 
 * Tools  
@@ -235,9 +239,19 @@ Service and Deployment definition for all workloads
 
 - Always use limits for pods
 
+* Usefull shortcuts
+    alias kg='kubectl get'
+    alias kga='kubectl get all'
+    alias kgan='kubectl get all --all-namespaces'
+    alias kcc='kubectl config use-context'
+    alias kl='kubectl logs'
+    alias klf='kubectl logs -f'
+    alias kd='kubectl describe'
+    alias ksn='kubectl -n kube-system'
 
-
-
+Suggestions: 
+- oh-my-zsh kubectl autocomplete 
+- VSCode kubernetes plugin
 
 * Presentation Available at 
 
