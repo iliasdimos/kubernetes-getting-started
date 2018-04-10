@@ -70,10 +70,6 @@ Node Types:
 - *Master* / Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
 - *Nodes* - a worker machine
 
-And state is stored in
-
-- *etcd* - Stores the state of the cluster and running components
-
     kubectl get nodes
 
 
@@ -84,6 +80,11 @@ And state is stored in
 - *kube-apiserver* - REST operations with the cluster
 - *kube-controller-manager* - Watches the shared state of the cluster and makes changes towards the desired state
 - *kube-scheduler* - Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
+
+And state is stored in
+
+- *etcd* - Stores the state of the cluster and running components
+
 
 
 
