@@ -83,7 +83,7 @@ And state is stored in
 - *kubelet* - The agent that runs on each node
 - *kube-apiserver* - REST operations with the cluster
 - *kube-controller-manager* - Watches the shared state of the cluster and makes changes towards the desired state
-- *kube-scheduler* - Watches over the cluster and acts accordingly. All are exposed through the API as necessary.
+- *kube-scheduler* - Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
 
 
 
@@ -91,15 +91,17 @@ And state is stored in
 * Components: 
 
 - *Pod* - The smallest deployable object
-- *ReplicationController* - enables you to easily create multiple pods, then make sure that that number of pods always exists
-- *ReplicaSet* - Replication status of the RC but with more options for the selector. 
+- *ReplicaSet* - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
 - *Deployment* - Replacement of RC, replication through RS, Rollout/rollback abilities.
+
+- *ReplicationController* - Deprecated -  enables you to easily create multiple pods, then make sure that that number of pods always exists
 
 
     kubectl get pods 
-    kubectl get rc 
     kubectl get rs 
     kubectl get deployment 
+
+    kubectl get rc 
 
     kubectl get all
 
@@ -174,11 +176,13 @@ Basic kubectl commands
 
 * Working stack
 
-- Deployment -> ReplicaSet -> Pods
+- Use Yaml files (on git) for definitions for :
 
-- Service
+    Deployment (which includes -> ReplicaSet -> Pods)
 
-- Use Yaml files for definitions 
+    Service
+
+
 
 
 * Deployment Simple Example 
@@ -200,25 +204,31 @@ Basic kubectl commands
 
 Deployment and service
 
-    kubectl create -f app-deployment.yaml
+    (where 'worker' is the name of our deployment)
+
+    kubectl create -f examples/deployment.yaml
     
-    kubectl create -f app-service.yaml
+    kubectl create -f examples/service.yaml
 
-    kubectl replace -f app-deployment.yaml
+    kubectl replace -f examples/deployment.yaml
 
-    kubectl set image deployment/nginx nginx=nginx:1.13.8
+    kubectl set image deployment/worker worker=goweb:0.2
 
-    kubectl scale --replicas=3 -f app-deployment.yaml
+    kubectl scale --replicas=3 -f examples/deployment.yaml
+
+    kubectl scale --replicas=1 deployment/worker
 
     kubectl rollout status deployment app-deployment
+
     kubectl rollout history deployment app-deployment
-    kubectl rollout undo app-deployment -revision=30
+
+    kubectl rollout undo worker
 
 
 
 
 
-* TL/DR notes
+* Final Notes
 
 - Okay, I 've got my cluster what i need 
 Service and Deployment definition for all workloads
@@ -226,11 +236,17 @@ Service and Deployment definition for all workloads
 - KubeDNS provide access to services in the form of :
 <service-name>.<namespace>.svc
 
-- In case you need it, Environmental Variables for everytinhg up to creation time in pods are available
+- Use Environmental Variables for config. (12 factor app)
+
+- For everyting up to creation time, in pods, all resources are available in Environmental variables
 
 - Always use limits for pods
 
+- Create your services wisely and before deployments 
+
+
 * Usefull shortcuts
+    alias k='kubectl'
     alias kg='kubectl get'
     alias kga='kubectl get all'
     alias kgan='kubectl get all --all-namespaces'
@@ -240,10 +256,24 @@ Service and Deployment definition for all workloads
     alias kd='kubectl describe'
     alias ksn='kubectl -n kube-system'
 
-Suggestions: 
+
+Tools Suggestions: 
 - oh-my-zsh kubectl autocomplete 
 - VSCode kubernetes plugin
 
+
+* Next steps 
+- Configmaps
+- Ingress
+- RBAC
+- Helm
+- CI/CD consepts
+
+
 * Presentation Available at 
 
+.link https://go-talks.appspot.com/github.com/dosko64/kubernetes-getting-started/kubernetes-getting-started.slide
+
+
+and code at 
 .link https://github.com/dosko64/kubernetes-getting-started

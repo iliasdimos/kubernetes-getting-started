@@ -5,7 +5,8 @@ metadata:
 spec:
   selector:
     app:  worker
-  type: ClusterIP | NodePort | LoadBalancer
+  type: LoadBalancer
+  # type: ClusterIP | NodePort | LoadBalancer
   ports:
   - name: play
     port: 9000
