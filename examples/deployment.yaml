@@ -19,7 +19,7 @@ spec:
         app:  worker
     spec:
       containers:
-      - image:  dosko64/worker
+      - image:  dosko64/goweb:0.1
         name:  worker
         command: ["./bin/worker"]
         args: ["-loglever=DEBUG"]

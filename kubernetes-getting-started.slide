@@ -187,16 +187,7 @@ Basic kubectl commands
 
 * Deployment Full Example
 .code -edit examples/deployment1.yaml
-
-
-* Deployment Full Example (part 2)
-.code -edit examples/deployment2.yaml
-
-
-* Deployment Full Example (part 3)
-.code -edit examples/deployment3.yaml
-
-
+    --> to be continued to editor deployment.yaml
 
 * Service Example
 .code -edit examples/service.yaml

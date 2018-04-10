@@ -11,4 +11,4 @@ spec:
     spec:
       containers:
       - name: worker
-        image: dosko64/worker
+        image: dosko64/goweb:0.1
