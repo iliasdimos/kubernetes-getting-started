@@ -243,6 +243,8 @@ Service and Deployment definition for all workloads
 
 - Always use limits for pods
 
+- Always use healthcheck in your apps
+
 - Create your services wisely and before deployments 
 
 
