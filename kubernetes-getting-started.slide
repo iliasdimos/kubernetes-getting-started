@@ -32,21 +32,21 @@ iliasdimos@gmail.com
 
 
 * Setup 
-Local 
-- Minikube
+- Local 
+    - Minikube
 
-Cloud Providers
-- Google Kubernetes Engine
-- Microsoft ACS Engine and AKS Engine
-- Amazon EKS
+- Cloud Providers
+    - Google Kubernetes Engine
+    - Microsoft ACS Engine and AKS Engine
+    - Amazon EKS
 
-Tools to setup your cluster
-- kubeadm 
-- kops 
-- kubicorn
+- Tools to setup your cluster
+    - kubeadm 
+    - kops 
+    - kubicorn
 
-Cli tool 
-- kubectl
+- Cli tool 
+    - kubectl
 
 
 
@@ -54,9 +54,10 @@ Cli tool
 * Enterprise Solutions 
 
 - Juju by Canonical
-- Tectonic  by CoreOS
 
-- More at 
+- Tectonic by CoreOS
+
+- More at: 
 .link https://kubernetes.io/docs/setup/pick-right-solution/
 
 There are a lot of resources out there on how to setup you cluster
@@ -67,8 +68,8 @@ There are a lot of resources out there on how to setup you cluster
 * Architecture
 Node Types: 
 
-- *Master* / Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
-- *Nodes* - a worker machine
+- *Master* - Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
+- *Worker* - reponsible for running our apps
 
     kubectl get nodes
 
@@ -77,13 +78,16 @@ Node Types:
 * Architecture (2) / Configuration:
 
 - *kubelet* - The agent that runs on each node
+
 - *kube-apiserver* - REST operations with the cluster
+
 - *kube-controller-manager* - Watches the shared state of the cluster and makes changes towards the desired state
+
 - *kube-scheduler* - Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
 
 And state is stored in
 
-- *etcd* - Stores the state of the cluster and running components
+- *etcd* 
 
 
 
@@ -92,10 +96,13 @@ And state is stored in
 * Components: 
 
 - *Pod* - The smallest deployable object
-- *ReplicaSet* - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
-- *Deployment* - Replacement of RC, replication through RS, Rollout/rollback abilities.
 
 - *ReplicationController* - Deprecated -  enables you to easily create multiple pods, then make sure that that number of pods always exists
+
+- *ReplicaSet* - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
+
+- *Deployment* - Replacement of RC, replication through RS, Rollout/rollback abilities.
+
 
 
     kubectl get pods 
@@ -105,22 +112,6 @@ And state is stored in
     kubectl get rc 
 
     kubectl get all
-
-* Namespace 
-
-- Virtual clusters in the same physical cluster
-
-    kubectl get namespace
-    kubectl get all --all-namespaces
-
-- Kubeconfig 
-    Env Variables
-    KUBECONFIG 
-    Default ~/.kube/config
-
-    kubectl config view
-    kubectl config set-context prod --cluster='kluster' --namespace='production' --user='kubelet'
-    kubectl config use-context prod
 
 
 
@@ -153,6 +144,25 @@ a collection of rules that allow inbound connections to reach the cluster servic
 .code examples/ingress.yaml
 
     kubectl get ingress
+
+* Namespace 
+
+- Virtual clusters in the same physical cluster
+
+    kubectl get namespace
+    kubectl get all --all-namespaces
+
+- Kubeconfig 
+    Env Variables
+    KUBECONFIG 
+    Default ~/.kube/config
+
+    kubectl config view
+    kubectl config set-context prod --cluster='kluster' --namespace='production' --user='kubelet'
+    kubectl config use-context prod
+: kubeconfig
+    kubeconfig is a yaml file, so you can edit it by hand
+
 
 * Recap Components
 
@@ -205,8 +215,7 @@ Basic kubectl commands
 
 Deployment and service
 
-    (where 'worker' is the name of our deployment)
-
+: Create replace deployment 
     kubectl create -f examples/deployment.yaml
     
     kubectl create -f examples/service.yaml
@@ -214,11 +223,11 @@ Deployment and service
     kubectl replace -f examples/deployment.yaml
 
     kubectl set image deployment/worker worker=goweb:0.2
-
+: Scale 
     kubectl scale --replicas=3 -f examples/deployment.yaml
 
     kubectl scale --replicas=1 deployment/worker
-
+: Rollback deployment
     kubectl rollout status deployment app-deployment
 
     kubectl rollout history deployment app-deployment
@@ -231,19 +240,16 @@ Deployment and service
 
 * Final Notes
 
-- Okay, I 've got my cluster what i need 
-Service and Deployment definition for all workloads
-
-- KubeDNS provide access to services in the form of :
-<service-name>.<namespace>.svc
-
-- Use Environmental Variables for config. (12 factor app)
-
+- We need Service and Deployment definition for all your workloads
+- KubeDNS provide access to services in the form of: 
+    <service-name>.<namespace>.svc
 - For everyting up to creation time, in pods, all resources are available in Environmental variables
 
-- Always use limits for pods
+- Environmental Variables for configuration in your apps (12 factor app)
 
-- Always use healthcheck in your apps
+- Createhealthcheck in your apps
+
+- Always apply limits for pods
 
 - Create your services wisely and before deployments 
 
