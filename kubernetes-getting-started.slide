@@ -241,18 +241,21 @@ Deployment and service
 * Final Notes
 
 - We need Service and Deployment definition for all your workloads
-- KubeDNS provide access to services in the form of: 
-    <service-name>.<namespace>.svc
-- For everyting up to creation time, in pods, all resources are available in Environmental variables
-
-- Environmental Variables for configuration in your apps (12 factor app)
-
-- Createhealthcheck in your apps
-
-- Always apply limits for pods
 
 - Create your services wisely and before deployments 
 
+- KubeDNS provide access to services in the form of: 
+    <service-name>.<namespace>.svc
+
+- For everyting up to creation time, in pods, all resources are available in environmental variables
+
+- Environmental Variables for configuration in your apps (12 factor app)
+
+- Create healthcheck in your apps
+
+- Always apply limits for pods
+
+- Version your docker images and don't use latest
 
 * Usefull shortcuts
     alias k='kubectl'
