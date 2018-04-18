@@ -6,14 +6,27 @@ DevOps Engineer, Pollfish
 iliasdimos@gmail.com
 @dosko64
 
+* Docker Athens Meetup
+.image images/docker.png
 
 
+* About 
 
+- Devops
+- Father 
+- Rock n roll and beers 
+ 
 
 * What is Kubernetes?
-- A highly available cluster of computers, connected to work as a single unit
-- Automates the distribution and scheduling of containers in that cluster
-- Backed by a big community and Google
+- Open source  
+: Google open-sourced the Kubernetes project in 2014
+
+- Highly available
+: Through scheduling and healthchecking
+
+- Managing containers 
+
+- Backed by a big community
 - A lot of enteprises put effort on the project
 
 
@@ -23,7 +36,7 @@ iliasdimos@gmail.com
 
 
 * Why Kubernetes
-- Run new code in production without setting up servers (if you manage to setup a cluster)
+- Run new code in production without setting up servers
 - Fail over capabilities
 - Easy see what you are running in the cluster
 - Better use of your resources
@@ -35,11 +48,6 @@ iliasdimos@gmail.com
 - Local 
     - Minikube
 
-- Cloud Providers
-    - Google Kubernetes Engine
-    - Microsoft ACS Engine and AKS Engine
-    - Amazon EKS
-
 - Tools to setup your cluster
     - kubeadm 
     - kops 
@@ -50,17 +58,25 @@ iliasdimos@gmail.com
 
 
 
+* Providers 
 
-* Enterprise Solutions 
+- Cloud 
+    - Google Kubernetes Engine
+    - Microsoft ACS Engine and AKS Engine
+    - Amazon EKS
 
-- Juju by Canonical
 
-- Tectonic by CoreOS
+Enterprise Solutions 
+
+    - Juju by Canonical
+
+    - Tectonic by CoreOS
 
 - More at: 
 .link https://kubernetes.io/docs/setup/pick-right-solution/
 
-There are a lot of resources out there on how to setup you cluster
+
+    There are a lot of resources out there on how to setup you cluster
 
 
 
@@ -68,40 +84,53 @@ There are a lot of resources out there on how to setup you cluster
 * Architecture
 Node Types: 
 
-- *Master* - Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
-- *Worker* - reponsible for running our apps
+- Master
+
+: Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
+
+- Worker
+
+: reponsible for running our apps, our payloads
 
     kubectl get nodes
 
 
 
-* Architecture (2) / Configuration:
+* Architecture
 
-- *kubelet* - The agent that runs on each node
+- kubelet
+: - The agent that runs on each node
 
-- *kube-apiserver* - REST operations with the cluster
+- kube-apiserver
+: - REST operations with the cluster
 
-- *kube-controller-manager* - Watches the shared state of the cluster and makes changes towards the desired state
+- kube-controller-manager
+: - the core control loops shipped with Kubernetes 
+: -- Watches the shared state of the cluster, throught the apiserver, and makes changes towards the desired state, 
+: --- includes replication namespace serviceaccount controllers etc.
 
-- *kube-scheduler* - Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
+- kube-scheduler
+: Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
 
-And state is stored in
-
-- *etcd* 
-
+- etcd
+: Stores the state of the cluster
 
 
 
 
 * Components: 
 
-- *Pod* - The smallest deployable object
+- *Pod* 
+: - The smallest deployable object
 
-- *ReplicationController* - Deprecated -  enables you to easily create multiple pods, then make sure that that number of pods always exists
+- *ReplicationController* - Deprecated -  
+: enables you to easily create multiple pods, then make sure that that number of pods always exists
 
-- *ReplicaSet* - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
+- *ReplicaSet* 
+: - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
 
-- *Deployment* - Replacement of RC, replication through RS, Rollout/rollback abilities.
+- *Deployment* 
+: - Replacement of RC, replication through RS, Rollout/rollback abilities.
 
 
 
@@ -119,31 +148,29 @@ And state is stored in
 
 * Okay, how i connect to this ?
 
-*Services*
+Services
 
-The entity that give us (loadbalanced) access to selected deployments/pods determined by labels 
+: The entity that give us (loadbalanced) access to selected deployments/pods determined by labels 
 
-Service are of the following types:
+: Service are of the following types:
 
-- ClusterIP
-- NodePort
-- LoadBalancer
+    - ClusterIP
+    - NodePort
+    - LoadBalancer
 
-    kubectl get svc 
+Ingress
 
-
-
-
-* Okay, how i connect to this ? (2)
-
-*Ingress*
-
-a collection of rules that allow inbound connections to reach the cluster services.
-(Imagine an Nginx in your cluster, with SSL termination and name-based routing)
+: a collection of rules that allow inbound connections to reach the cluster services.
+: Imagine an Nginx in your cluster, with SSL termination and name-based routing
 
 .code examples/ingress.yaml
 
+    kubectl get svc 
     kubectl get ingress
+
+
+
+
 
 * Namespace 
 
@@ -160,7 +187,8 @@ a collection of rules that allow inbound connections to reach the cluster servic
     kubectl config view
     kubectl config set-context prod --cluster='kluster' --namespace='production' --user='kubelet'
     kubectl config use-context prod
-: kubeconfig
+
+
     kubeconfig is a yaml file, so you can edit it by hand
 
 
@@ -172,6 +200,8 @@ a collection of rules that allow inbound connections to reach the cluster servic
 * Tools  
 - kubectl 
 
+: imperative
+
 ** Demo
 
 Basic kubectl commands
@@ -181,9 +211,10 @@ Basic kubectl commands
     kubectl get pods | deployment | svc | all 
     kubectl describe <resource>
     kubectl logs <pod_name>
+    kubectl exec <pod_name> cmd
+    kubectl exec -it <pod_name> bash 
 
-
-
+    kubectl proxy
 
 * Working stack
 
@@ -208,7 +239,44 @@ Basic kubectl commands
 .code -edit examples/service.yaml
 
 
+* Components part. 2 
 
+- Configmaps
+
+: Save your configurations to etcd and use them as a volume to pods
+
+- Secrets 
+
+: contains a small amount of sensitive data such as a password
+: use them as volumes in pods
+
+- Daemonset 
+: - A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
+
+- StatefulSets 
+: -- provide guarantees about the ordering and uniqueness of these Pods.
+: -- are valuable for applications that require one or more of the following.
+
+: -- Stable, unique network identifiers.
+: -- Stable, persistent storage.
+: -- Ordered, graceful deployment and scaling.
+: -- Ordered, graceful deletion and termination.
+: -- Ordered, automated rolling updates.
+
+- Jobs 
+: --- A job creates one or more pods and ensures that a specified number of them successfully terminate. 
+
+- Cronjobs
+: ---- A Cron Job manages time based Jobs, namely:
+: ---- Once at a specified point in time
+: ---- Repeatedly at a specified point in time
+
+* Configmaps 
+
+.code examples/config.yaml
+
+* Configmaps as Volume
+.code examples/volume_config.yaml 
 
 
 * Demo (2)
@@ -275,8 +343,7 @@ Tools Suggestions:
 
 
 * Next steps 
-- Configmaps
-- Ingress
+
 - RBAC
 - Helm
 - CI/CD consepts

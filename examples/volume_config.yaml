@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  template:
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/
+          name: config
+      restartPolicy: Always
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-config
+          items:
+          - key: api.conf
+            path: api.conf

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  labels:
+    app: nginx
+data:
+  api.conf: |-
+    upstream Api {
+        server backend.production.svc:8080;
+    }
+    server {
+      listen 80;
+        server_name _;
+        gzip  on;
+        location /api {
+            proxy_pass http://Api;
+        }
+    }
