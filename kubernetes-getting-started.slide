@@ -86,11 +86,11 @@ Node Types:
 
 - Master
 
-: Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
+: Master - Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
 
 - Worker
 
-: reponsible for running our apps, our payloads
+: worker - reponsible for running our apps, our payloads
 
     kubectl get nodes
 
@@ -99,21 +99,21 @@ Node Types:
 * Architecture
 
 - kubelet
-: - The agent that runs on each node
+: - kubelet - The agent that runs on each node
 
 - kube-apiserver
-: - REST operations with the cluster
+: - kube-apiserver - REST operations with the cluster
 
 - kube-controller-manager
-: - the core control loops shipped with Kubernetes 
+: kube controller-manager -  the core control loops shipped with Kubernetes 
 : -- Watches the shared state of the cluster, throught the apiserver, and makes changes towards the desired state, 
 : --- includes replication namespace serviceaccount controllers etc.
 
 - kube-scheduler
-: Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
+: kube-scheduler  -  Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
 
-- etcd
-: Stores the state of the cluster
+- 
+: etcd -- key value store used to store the state of the cluster
 
 
 
@@ -121,16 +121,16 @@ Node Types:
 * Components: 
 
 - *Pod* 
-: - The smallest deployable object
+: pod - The smallest deployable object, can contain 1 or more docker containers. 
 
 - *ReplicationController* - Deprecated -  
-: enables you to easily create multiple pods, then make sure that that number of pods always exists
+: Replication Controller - enables you to easily create multiple pods, then make sure that that number of pods always exists
 
 - *ReplicaSet* 
-: - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
+: ReplicaSet - Enables easily create multiple pods. Ensures a given nuber of pods always run. Keep history of deployments. Advance selector.
 
 - *Deployment* 
-: - Replacement of RC, replication through RS, Rollout/rollback abilities.
+: Deployment - Replacement of RC, replication through RS, Rollout/rollback abilities.
 
 
 
@@ -150,7 +150,7 @@ Node Types:
 
 Services
 
-: The entity that give us (loadbalanced) access to selected deployments/pods determined by labels 
+: Service - The entity that give us (loadbalanced) access to selected deployments/pods determined by labels 
 
 : Service are of the following types:
 
@@ -160,7 +160,7 @@ Services
 
 Ingress
 
-: a collection of rules that allow inbound connections to reach the cluster services.
+: Ingress -  a collection of rules that allow inbound connections to reach the cluster services.
 : Imagine an Nginx in your cluster, with SSL termination and name-based routing
 
 .code examples/ingress.yaml
@@ -243,17 +243,22 @@ Basic kubectl commands
 
 - Configmaps
 
-: Save your configurations to etcd and use them as a volume to pods
+: Configmaps - Save your configurations to etcd and use them as a volume to pods
 
 - Secrets 
-
-: contains a small amount of sensitive data such as a password
+: ---------
+: Secrets
+: Secrets contains a small amount of sensitive data such as a password
 : use them as volumes in pods
 
-- Daemonset 
+- Daemonset
+: --------- 
+: Daemonset
 : - A DaemonSet ensures that all (or some) Nodes run a copy of a Pod.
 
 - StatefulSets 
+: ---------
+: StatefulSets
 : -- provide guarantees about the ordering and uniqueness of these Pods.
 : -- are valuable for applications that require one or more of the following.
 
@@ -264,9 +269,13 @@ Basic kubectl commands
 : -- Ordered, automated rolling updates.
 
 - Jobs 
+: ---------
+: Jobs
 : --- A job creates one or more pods and ensures that a specified number of them successfully terminate. 
 
 - Cronjobs
+: ---------
+: Jobs
 : ---- A Cron Job manages time based Jobs, namely:
 : ---- Once at a specified point in time
 : ---- Repeatedly at a specified point in time
