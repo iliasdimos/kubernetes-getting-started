@@ -112,7 +112,7 @@ Node Types:
 - kube-scheduler
 : kube-scheduler  -  Watches over the cluster and acts accordingly to ensuer kube-controller-managere's requests. All are exposed through the API as necessary.
 
-- 
+- etcd
 : etcd -- key value store used to store the state of the cluster
 
 
@@ -215,6 +215,7 @@ Basic kubectl commands
     kubectl exec -it <pod_name> bash 
 
     kubectl proxy
+:  kubectl proxy, at http://localhost:8001/apis/ you can see the apis available in your cluster
 
 * Working stack
 
