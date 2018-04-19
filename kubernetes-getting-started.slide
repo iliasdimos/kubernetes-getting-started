@@ -244,7 +244,8 @@ Basic kubectl commands
 
 - Volumes 
 : volumes: A way to persist data to some kind of disk
-: based on the driver 
+: based on the driver
+: it's everything we expect from docker volumes to be, with a broader spectrum
 
 - Configmaps
 
