@@ -84,7 +84,9 @@ Node Types:
 
 - Master
 
-: Master - Node Controllers - a component which manages various aspects of nodes, health, availability, scheduling
+: Master - Node Controllers - a component which manages various aspects of nodes
+: health, scheduling
+: availability, internal list of nodes up to date 
 
 - Worker
 
@@ -240,6 +242,10 @@ Basic kubectl commands
 
 * Components part. 2 
 
+- Volumes 
+: volumes: A way to persist data to some kind of disk
+: based on the driver 
+
 - Configmaps
 
 : Configmaps - Save your configurations to etcd and use them as a volume to pods
@@ -292,15 +298,15 @@ Basic kubectl commands
 Deployment and service
 
 : Create replace deployment 
-    kubectl create -f examples/deployment.yaml
+    kubectl create -f examples/deployment_simple.yaml
     
     kubectl create -f examples/service.yaml
 
-    kubectl replace -f examples/deployment.yaml
+    kubectl replace -f examples/deployment_simple.yaml
 
     kubectl set image deployment/worker worker=goweb:0.2
 : Scale 
-    kubectl scale --replicas=3 -f examples/deployment.yaml
+    kubectl scale --replicas=3 -f examples/deployment_simple.yaml
 
     kubectl scale --replicas=1 deployment/worker
 : Rollback deployment

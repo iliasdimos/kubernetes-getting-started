@@ -19,7 +19,7 @@ spec:
         app:  worker
     spec:
       containers:
-      - image:  dosko64/goweb:0.1
+      - image:  dosko64/worker:0.1
         name:  worker
         command: ["./bin/worker"]
         args: ["-loglever=DEBUG"]
@@ -30,22 +30,20 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthcheck
-            port: 9000
-          initialDelaySeconds: 120
+            port: 8080
+          initialDelaySeconds: 20
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /healthcheck
-            port: 9000
-          initialDelaySeconds: 60
+            port: 8080
+          initialDelaySeconds: 20
           timeoutSeconds: 10
         env:
         - name: EXTRA_SERVICE
           value: "extra.production.svc"        
         ports:
-        - containerPort:  9000
-          name:  play
-        - containerPort:  9010
-          name:  jmx
+        - containerPort:  8080
+          name:  web
         imagePullPolicy: Always
       restartPolicy: Always

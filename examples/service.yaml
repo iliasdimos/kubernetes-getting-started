@@ -8,10 +8,10 @@ spec:
   type: LoadBalancer
   # type: ClusterIP | NodePort | LoadBalancer
   ports:
-  - name: play
-    port: 9000
-    targetPort: 9000
-  - name: jmx
-    port: 9010
-    targetPort: 9010
+  - name: web
+    port: 8080
+    targetPort: 8080
+  - name: admin
+    port: 9090
+    targetPort: 9090
 
