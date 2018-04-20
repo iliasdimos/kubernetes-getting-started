@@ -215,7 +215,7 @@ Basic kubectl commands
     kubectl exec -it <pod_name> bash 
 
     kubectl proxy
-:  kubectl proxy, at http://localhost:8001/apis/ you can see the apis available in your cluster
+: kubectl proxy, at http://localhost:8001/apis/ you can see the apis available in your cluster
 
 * Working stack
 
